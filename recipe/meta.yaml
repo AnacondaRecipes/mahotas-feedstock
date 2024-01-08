@@ -1,20 +1,17 @@
 {% set name = "mahotas" %}
 {% set version = "1.4.13" %}
-{% set sha256 = "a78dfe15045a20a0d9e01538b80f874580cd3525ae3eaa2c83ced51eb455879c" %}
-
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: a78dfe15045a20a0d9e01538b80f874580cd3525ae3eaa2c83ced51eb455879c
 
 build:
-  number: 2
-  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
   entry_points:
     - mahotas-features = mahotas.features_cli:main
 
@@ -26,33 +23,33 @@ requirements:
     - python
     - pip
     - numpy
+    - setuptools
+    - wheel
   run:
     - python
     - {{ pin_compatible('numpy') }}
 
 test:
+  imports:
+    - mahotas
   requires:
     - pytest
     - scipy
     - pillow
-
-  imports:
-    - mahotas
-
+    - pip
   commands:
     - mahotas-features --help
+    - pip check
 
 about:
   home: https://mahotas.readthedocs.io/
   license: MIT
   license_family: MIT
   license_file: COPYING
-
   summary: 'Mahotas: Computer Vision Library'
   description: |
     Mahotas is a library of fast computer vision algorithms
     (all implemented in C++) operating over numpy arrays.
-
   doc_url: https://mahotas.readthedocs.io/
   dev_url: https://github.com/luispedro/mahotas
 
