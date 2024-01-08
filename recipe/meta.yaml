@@ -40,7 +40,7 @@ test:
   commands:
     - mahotas-features --help
     - pip check
-    - pytest -vv --pyargs mahotas
+    - pytest -vvv
 
 about:
   home: https://mahotas.readthedocs.io/
