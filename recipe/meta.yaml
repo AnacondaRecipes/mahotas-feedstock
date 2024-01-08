@@ -22,7 +22,7 @@ requirements:
   host:
     - python
     - pip
-    - numpy
+    - numpy {{ numpy }}
     - setuptools
     - wheel
   run:
@@ -40,6 +40,7 @@ test:
   commands:
     - mahotas-features --help
     - pip check
+    - pytest -v --pyargs mahotas
 
 about:
   home: https://mahotas.readthedocs.io/
