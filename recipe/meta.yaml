@@ -17,7 +17,6 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
     - python
@@ -40,7 +39,10 @@ test:
   commands:
     - mahotas-features --help
     - pip check
-    - pytest -vvv --pyargs mahotas -k "not test_negative_values_haralick"  # [linux and aarch64]
+    # Seems like test_negative_values_haralick fails with the Segmentation Fault error on linux-aarch64,
+    # it's expected that you can run out of memory computing Haralick features on 16 bit images on some machines,
+    # see https://github.com/luispedro/mahotas/blob/v1.4.13/docs/source/faq.rst#i-ran-out-of-memory-computing-haralick-features-on-16-bit-images-is-it-not-supported 
+    - pytest -vv --pyargs mahotas -k "not test_negative_values_haralick"  # [linux and aarch64]
 
 about:
   home: https://mahotas.readthedocs.io/
